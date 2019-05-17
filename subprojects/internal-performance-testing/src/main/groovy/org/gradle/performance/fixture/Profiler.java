@@ -17,6 +17,7 @@
 package org.gradle.performance.fixture;
 
 import org.gradle.internal.jvm.Jvm;
+import org.gradle.internal.os.OperatingSystem;
 
 import java.io.File;
 import java.util.List;
@@ -26,8 +27,8 @@ public abstract class Profiler {
 
     public static Profiler create() {
         String targetDir = System.getProperty(TARGET_DIR_KEY);
-        if (targetDir != null && !Jvm.current().isIbmJvm()) {
-            return new JfrProfiler(new File(targetDir));
+        if (targetDir != null && !Jvm.current().isIbmJvm() && !OperatingSystem.current().isWindows()) {
+            return new AsyncProfiler(new File(targetDir));
         } else {
             return new NoopProfiler();
         }

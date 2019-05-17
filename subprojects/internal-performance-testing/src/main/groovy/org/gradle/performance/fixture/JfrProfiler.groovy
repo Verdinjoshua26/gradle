@@ -30,7 +30,6 @@ import org.gradle.performance.util.JCmd
  * Profiles performance test scenarios using the Java Flight Recorder.
  *
  * TODO support pause/resume so we can exclude clean tasks from measurement
- * TODO move flamegraph generation to buildSrc and offer it as a task so it can be used when people send us .jfr files
  */
 @CompileStatic
 @PackageScope
