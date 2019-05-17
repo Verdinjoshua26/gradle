@@ -237,15 +237,17 @@ class TestFileHelper {
     }
 
     private void setSourceDirectory(archiveTask, boolean readOnly) {
-        if (readOnly) {
-            ArchiveFileSet archiveFileSet = archiveTask instanceof Zip ? new ZipFileSet() : archiveTask.createTarFileSet();
-            archiveFileSet.setDir(file);
-            archiveFileSet.setFileMode("0444");
-            archiveFileSet.setDirMode("0555");
-            archiveTask.add(archiveFileSet);
+        ArchiveFileSet archiveFileSet = archiveTask instanceof Zip ? new ZipFileSet() : archiveTask.createTarFileSet()
+        if (file.isDirectory()) {
+            archiveFileSet.setDir(file)
         } else {
-            archiveTask.setBasedir(file);
+            archiveFileSet.setFile(file)
         }
+        if (readOnly) {
+            archiveFileSet.setFileMode("0444")
+            archiveFileSet.setDirMode("0555")
+        }
+        archiveTask.add(archiveFileSet)
     }
 
     public void tarTo(TestFile tarFile, boolean nativeTools, boolean readOnly) {
